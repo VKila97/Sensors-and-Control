@@ -3,10 +3,10 @@
 valid_method = 0;
 
 while valid_method == 0
-    fprintf('Movement Modes\n1) Joint State\n2) End Effector Pose\n');
+    fprintf('Movement Modes\n1) No Movement\n2) Joint State\n3) End Effector Pose\n');
     movement_method = input("Select Movement Mode: ");
     movement_method = round(movement_method);
-    if movement_method <= 2 && movement_method >= 1
+    if movement_method <= 3 && movement_method >= 1
         valid_method = 1;
     else
         fprintf('Not a valid mode, please try again\n\n');
@@ -35,9 +35,34 @@ send(safetyStatePublisher,safetyStateMsg);
 safetyStateMsg.Data = 3;
 send(safetyStatePublisher,safetyStateMsg);
 
+%% Pose Analysis
+
+if movement_method == 1
+    %Get current joint state
+    jointStateSubscriber = rossubscriber('/dobot_magician/joint_states'); % Create a ROS Subscriber to the topic joint_states
+    pause(2); % Allow some time for a message to appear
+    currentJointState = jointStateSubscriber.LatestMessage.Position % Get the latest message
+    
+    %Get current end effector pose
+    endEffectorPoseSubscriber = rossubscriber('/dobot_magician/end_effector_poses'); % Create a ROS Subscriber to the topic end_effector_poses
+    pause(2); %Allow some time for MATLAB to start the subscriber
+    currentEndEffectorPoseMsg = endEffectorPoseSubscriber.LatestMessage;
+    % Extract the position of the end effector from the received message
+    currentEndEffectorPosition = [currentEndEffectorPoseMsg.Pose.Position.X,
+                                  currentEndEffectorPoseMsg.Pose.Position.Y,
+                                  currentEndEffectorPoseMsg.Pose.Position.Z];
+    % Extract the orientation of the end effector
+    currentEndEffectorQuat = [currentEndEffectorPoseMsg.Pose.Orientation.W,
+                              currentEndEffectorPoseMsg.Pose.Orientation.X,
+                              currentEndEffectorPoseMsg.Pose.Orientation.Y,
+                              currentEndEffectorPoseMsg.Pose.Orientation.Z];
+    % Convert from quaternion to euler
+    [roll,pitch,yaw] = quat2eul(currentEndEffectorQuat);
+end
+
 %% Joint States
 
-if movement_method == 0
+if movement_method == 2
     %Get current joint state
     jointStateSubscriber = rossubscriber('/dobot_magician/joint_states'); % Create a ROS Subscriber to the topic joint_states
     pause(2); % Allow some time for a message to appear
@@ -56,7 +81,7 @@ end
 
 %% End Effector State
 
-if movement_method == 1
+if movement_method == 3
     %Get current end effector pose
     endEffectorPoseSubscriber = rossubscriber('/dobot_magician/end_effector_poses'); % Create a ROS Subscriber to the topic end_effector_poses
     pause(2); %Allow some time for MATLAB to start the subscriber

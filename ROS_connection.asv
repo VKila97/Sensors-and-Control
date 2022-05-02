@@ -1,9 +1,17 @@
 %% Program Settings
 
-valid_method
+valid_method = 0;
 
-fprintf('Movement Modes\n1) Joint State\n2) End Effector Pose\n')
-movement_method = input("Select Movement Mode: ");
+while valid_method == 0
+    fprintf('Movement Modes\n1) No Movement\n2) Joint State\n2) End Effector Pose\n');
+    movement_method = input("Select Movement Mode: ");
+    movement_method = round(movement_method);
+    if movement_method <= 2 && movement_method >= 1
+        valid_method = 1;
+    else
+        fprintf('Not a valid mode, please try again\n\n');
+    end
+end
 
 %% Intialise Connection
 
