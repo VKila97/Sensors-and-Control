@@ -3,13 +3,13 @@
 valid_method = 0;
 
 while valid_method == 0
-    fprintf('Movement Modes\n1) No Movement\n2) Joint State\n3) End Effector Pose\n');
+    fprintf('Movement Modes\n1) No Movement\n2) Joint State\n3) End Effector Pose\n4) Input Movements\n');
     movement_method = input("Select Movement Mode: ");
     movement_method = round(movement_method);
-    if movement_method <= 3 && movement_method >= 1
+    if movement_method <= 4 && movement_method >= 1
         valid_method = 1;
     else
-        fprintf('Not a valid mode, please try again\n\n');
+        fprintf('\nNot a valid mode, please try again\n\n');
     end
 end
 
@@ -116,4 +116,50 @@ if movement_method == 3
     targetEndEffectorMsg.Orientation.Z = qua(4);
 
     send(targetEndEffectorPub,targetEndEffectorMsg);
+end
+
+%% Input Movements
+
+if movement_method == 4
+    while(1)
+        %User input
+        valid_input = 0;
+        x = input("X coordinate: ");
+        y = input("Y coordinate: ");
+        z = input("Z coordinate: ");
+        
+        while valid_input == 0
+            tool_state = input("\nTool State\n1 - ON\n0 - OFF\nSelection: ");
+
+            if tool_state <= 2 && movement_method >= 1
+                valid_input = 1;
+            else
+                fprintf('\nNot a valid state, please try again\n\n');
+            end
+        end
+
+        %Set end effector pose target
+        endEffectorPosition = [x,y,z];
+        endEffectorRotation = [0,0,0];
+
+
+        [targetEndEffectorPub,targetEndEffectorMsg] = rospublisher('/dobot_magician/target_end_effector_pose');
+
+        targetEndEffectorMsg.Position.X = endEffectorPosition(1);
+        targetEndEffectorMsg.Position.Y = endEffectorPosition(2);
+        targetEndEffectorMsg.Position.Z = endEffectorPosition(3);
+
+        qua = eul2quat(endEffectorRotation);
+        targetEndEffectorMsg.Orientation.W = qua(1);
+        targetEndEffectorMsg.Orientation.X = qua(2);
+        targetEndEffectorMsg.Orientation.Y = qua(3);
+        targetEndEffectorMsg.Orientation.Z = qua(4);
+
+        send(targetEndEffectorPub,targetEndEffectorMsg);
+        
+        %Set tool state
+        [toolStatePub, toolStateMsg] = rospublisher('/dobot_magician/target_tool_state');
+        toolStateMsg.Data = [tool_state]; % Send 1 for on and 0 for off 
+        send(toolStatePub,toolStateMsg);
+    end
 end
