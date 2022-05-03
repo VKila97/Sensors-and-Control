@@ -1,6 +1,6 @@
 Dobot Start up Commands
 
-1)	source /home/-username-/catkin_ws/devel/setup.bash
+1)	source /home/jared/catkin_ws/devel/setup.bash
 
 *change -username- to your file path
 
