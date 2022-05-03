@@ -69,7 +69,7 @@ if movement_method == 2
     currentJointState = jointStateSubscriber.LatestMessage.Position % Get the latest message
 
     %Set joint state target
-    jointTarget = [0,0.4,0.3,0]; % Remember that the Dobot has 4 joints by default.
+    jointTarget = [-0.5,0.2,0.2,0]; % Remember that the Dobot has 4 joints by default.
 
     [targetJointTrajPub,targetJointTrajMsg] = rospublisher('/dobot_magician/target_joint_states');
     trajectoryPoint = rosmessage("trajectory_msgs/JointTrajectoryPoint");
@@ -96,10 +96,10 @@ if movement_method == 3
                               currentEndEffectorPoseMsg.Pose.Orientation.Y,
                               currentEndEffectorPoseMsg.Pose.Orientation.Z];
     % Convert from quaternion to euler
-    [roll,pitch,yaw] = quat2eul(currentEndEffectorQuat);
+    %[roll,pitch,yaw] = quat2eul(currentEndEffectorQuat);
 
     %Set end effector pose target
-    endEffectorPosition = [0.2,0,0.1];
+    endEffectorPosition = [0.1,0,0.1];
     endEffectorRotation = [0,0,0];
 
 
@@ -163,3 +163,7 @@ if movement_method == 4
         send(toolStatePub,toolStateMsg);
     end
 end
+
+%% End Program
+
+rosshutdown;
