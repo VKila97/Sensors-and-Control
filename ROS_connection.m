@@ -116,6 +116,21 @@ if movement_method == 3
     targetEndEffectorMsg.Orientation.Z = qua(4);
 
     send(targetEndEffectorPub,targetEndEffectorMsg);
+    
+    while(1)
+        %Get current end effector pose
+        endEffectorPoseSubscriber = rossubscriber('/dobot_magician/end_effector_poses'); % Create a ROS Subscriber to the topic end_effector_poses
+        pause(2); %Allow some time for MATLAB to start the subscriber
+        currentEndEffectorPoseMsg = endEffectorPoseSubscriber.LatestMessage;
+        % Extract the position of the end effector from the received message
+        currentEndEffectorPosition = [currentEndEffectorPoseMsg.Pose.Position.X,
+                                      currentEndEffectorPoseMsg.Pose.Position.Y,
+                                      currentEndEffectorPoseMsg.Pose.Position.Z];                   
+        %Print positions
+        fprintf('X: %d\nY: %d\nZ: %d\n\n',currentEndEffectorPosition(1),currentEndEffectorPosition(2),currentEndEffectorPosition(3));
+        pause(2);
+    end
+
 end
 
 %% Input Movements
