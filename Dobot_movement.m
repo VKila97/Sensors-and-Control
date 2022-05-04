@@ -26,7 +26,19 @@ send(safetyStatePublisher,safetyStateMsg);
 
 %% Movement
 
+%Move down, pick up object and move back up
+Move_End_Effector(next_target);
+tool_state(1);
+pause(3);
+Move_End_Effector(default_pos);
 
+pause(5)
+
+%Move down, place object and move back up
+Move_End_Effector(next_target);
+pause(3);
+tool_state(0);
+Move_End_Effector(default_pos);
 
 %% End Program
 
