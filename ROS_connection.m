@@ -116,7 +116,7 @@ if movement_method == 3
     targetEndEffectorMsg.Orientation.Z = qua(4);
 
     send(targetEndEffectorPub,targetEndEffectorMsg);
-    
+    %%
     while(1)
         %Get current end effector pose
         endEffectorPoseSubscriber = rossubscriber('/dobot_magician/end_effector_poses'); % Create a ROS Subscriber to the topic end_effector_poses
