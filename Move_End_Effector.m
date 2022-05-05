@@ -1,5 +1,6 @@
 function [] = Move_End_Effector(target)
 %Move end effector to input coordinates
+%Subscriber initalisation must occur outside of function
     [targetEndEffectorPub,targetEndEffectorMsg] = rospublisher('/dobot_magician/target_end_effector_pose');
 
     targetEndEffectorMsg.Position.X = target(1);

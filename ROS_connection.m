@@ -95,8 +95,12 @@ if movement_method == 3
                               currentEndEffectorPoseMsg.Pose.Orientation.X,
                               currentEndEffectorPoseMsg.Pose.Orientation.Y,
                               currentEndEffectorPoseMsg.Pose.Orientation.Z];
+    currentEndEffectorQuat = transpose(currentEndEffectorQuat);
+    
     % Convert from quaternion to euler
-    %[roll,pitch,yaw] = quat2eul(currentEndEffectorQuat);
+    EUL = quat2eul(currentEndEffectorQuat);
+    
+    %%
 
     %Set end effector pose target
     endEffectorPosition = [0.1,0,0.1];

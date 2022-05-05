@@ -34,20 +34,16 @@ next_target(3) = ground_level;
 
 %Move down, pick up object and move back up
 fprintf('Move down + suction on\n');
-
 Move_End_Effector(next_target);
 tool_state(1);
 pause(3);
-
 fprintf('Move up\n');
-
 Move_End_Effector(default_pos);
 
 pause(5)
 
 %Move down, place object and move back up
 fprintf('Move down\n');
-
 Move_End_Effector(next_target);
 pause(3);
 
