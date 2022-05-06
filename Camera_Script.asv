@@ -48,15 +48,14 @@ imshow(BW)
 
 hold off
 
-%Filters for biggest group of white pixels and then calculates centriod
-taget_object = bwareafilt(BW,1);
-object_centre = regionprops(taget_object,'centroid');
-
 %
+taget_object = bwareafilt(BW,1);
+s = regionprops(taget_object,'centroid');
+
 imshow(taget_object)
 hold on
 plot(cornerPoints)
-plot(object_centre.Centroid(1),object_centre.Centroid(2),'Color','red')
+plot(s.Centroid(1),s.Centroid(2),'Color','red')
 
 function caminfoCallback (hObject);
 
