@@ -47,7 +47,7 @@ imshow(BW)
 
 
 % Convert RGB image to chosen color space
-I = rgb2hsv(RGB);
+I = rgb2hsv(image);
 
 % Define thresholds for channel 1 based on histogram settings
 channel1Min = 0.397;
@@ -66,6 +66,7 @@ sliderBW = (I(:,:,1) >= channel1Min ) & (I(:,:,1) <= channel1Max) & ...
     (I(:,:,2) >= channel2Min ) & (I(:,:,2) <= channel2Max) & ...
     (I(:,:,3) >= channel3Min ) & (I(:,:,3) <= channel3Max);
 BW = sliderBW;
+imshow(BW)
 
 
 %%
