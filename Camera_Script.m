@@ -11,7 +11,7 @@ sub = rossubscriber("camera/color/image_raw");
 %sub = rossubscriber('/chatter',@exampleHelperROSChatterCallback,'DataFormat','struct');
 %vid = videoinput('winvideo'); 
 %img = getsnapshot(vid);
-%sub = rossubscriber("camera/color/image_raw");
+
 
 
 
@@ -22,7 +22,7 @@ image = readImage(msg2);
 %% Red
 
 % Convert RGB image to chosen color space
-I = rgb2hsv(image);
+I = rgb2hsv(test_image);
 
 % Define thresholds for channel 1 based on histogram settings
 channel1Min = 0.947;
