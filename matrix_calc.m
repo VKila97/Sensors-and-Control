@@ -8,8 +8,8 @@ T1 = inv(T1);
 %% Tranformations from cubes to end-effector
 
 %Tranformation from the floor of the table to the camera
-ThetaX = 180;
-ThetaZ = -90;
+ThetaX = -180;
+ThetaZ = 90;
 
 
 RotationX_CamToTable = [1 0 0 0; 
@@ -22,10 +22,10 @@ TranslationX_CamToTable = [1 0 0 CubeCentreX;
                            0 0 1 0;
                            0 0 0 1];
                                                  
-TranslationY_CamToTable = [1 0 0 0;
-                           0 1 0 CubeCentreY;
-                           0 0 1 0;
-                           0 0 0 1];                 
+% TranslationY_CamToTable = [1 0 0 0;
+%                            0 1 0 0;
+%                            0 0 1 0;
+%                            0 0 0 1];                 
                   
 RotationZ_CamToTable = [cos(ThetaZ) -sin(ThetaZ) 0 0;
                         sin(ThetaZ) cos(ThetaZ) 0 0;
