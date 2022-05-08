@@ -42,8 +42,9 @@ TranslationZ_CamToTable = [0;
                            Depth];
                            
 
-Rotation_CamToTable = TranslationX_CamToTable*TranslationZ_CamToTable;
-Translation_CamToTable = TranslationX_CamToTable*Depth + 0;
+Rotation_CamToTable = RotationX_CamToTable*RotationZ_CamToTable
+
+%Translation_CamToTable = TranslationX_CamToTable*Depth + 0;
                          
                   
                   
